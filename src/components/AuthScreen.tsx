@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import VideoBackground from "@/components/VideoBackground";
+import ScreenBackground from "@/components/ScreenBackground";
 import SolarSystem from "@/components/SolarSystem";
+import { backgroundImages } from "@/lib/backgrounds";
 
 interface AuthScreenProps {
   onAuth: (token: string, user: Record<string, unknown>) => void;
@@ -21,7 +22,7 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
   const [loading, setLoading] = useState(false);
   const [resetSent, setResetSent] = useState(false);
   const [resetLink, setResetLink] = useState("");
-  const [bgMode, setBgMode] = useState<"video" | "solar">("video");
+  const [bgMode, setBgMode] = useState<"image" | "solar">("image");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,7 +102,7 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background layer */}
-      {bgMode === "video" ? <VideoBackground /> : <SolarSystem />}
+      {bgMode === "image" ? <ScreenBackground src={backgroundImages.auth} /> : <SolarSystem />}
 
       {/* Form layer */}
       <motion.div
@@ -268,15 +269,15 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
         {/* Background toggle + hint */}
         <div className="flex items-center justify-center gap-3 mt-4">
           <motion.button
-            onClick={() => setBgMode(bgMode === "video" ? "solar" : "video")}
+            onClick={() => setBgMode(bgMode === "image" ? "solar" : "image")}
             whileTap={{ scale: 0.9 }}
             className="text-[10px] px-3 py-1.5 rounded-full bg-white/[0.08] border border-white/[0.1] text-white/40 hover:text-white/70 hover:bg-white/[0.12] transition-all"
           >
-            {bgMode === "video" ? "🪐 Switch to Solar System" : "🎬 Switch to Video"}
+            {bgMode === "image" ? "🪐 Switch to Solar System" : "🖼️ Switch to Wallpaper"}
           </motion.button>
         </div>
         <p className="text-center text-[10px] text-white/15 mt-2">
-          {bgMode === "video" ? "🎬 Cinematic space background" : "🌌 Move your mouse to interact"}
+          {bgMode === "image" ? "🖼️ Cinematic wallpaper background" : "🌌 Move your mouse to interact"}
         </p>
       </motion.div>
     </div>

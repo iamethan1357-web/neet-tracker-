@@ -7,7 +7,8 @@ import Planner from "@/components/Planner";
 import Calendar from "@/components/Calendar";
 import Stats from "@/components/Stats";
 import Profile from "@/components/Profile";
-import DashboardVideo from "@/components/DashboardVideo";
+import ScreenBackground from "@/components/ScreenBackground";
+import { backgroundImages } from "@/lib/backgrounds";
 
 type Tab = "dashboard" | "planner" | "calendar" | "stats" | "profile";
 
@@ -16,7 +17,7 @@ export default function Home() {
   const [user, setUser] = useState<Record<string, unknown> | null>(null);
   const [tab, setTab] = useState<Tab>("dashboard");
   const [loaded, setLoaded] = useState(false);
-  const [showVideo, setShowVideo] = useState(true);
+  const [showBackground, setShowBackground] = useState(true);
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
@@ -70,17 +71,14 @@ export default function Home() {
     { key: "profile", label: "Profile", icon: "👤", activeIcon: "🧑‍⚕️" },
   ];
 
-  const activeVideoId =
-    tab === "calendar"
-      ? "SrSNW3bJpcM"
-      : tab === "profile"
-        ? "4ig5W_SwqVE"
-        : "Y4uyuzOqXcs";
+  // Each screen (tab) has its own background image — it crossfades
+  // automatically when the user switches tabs.
+  const activeBackground = backgroundImages[tab];
 
   return (
     <div className="min-h-screen pb-20 perspective-container relative">
-      {/* Video Background */}
-      {showVideo && <DashboardVideo videoId={activeVideoId} />}
+      {/* Screen background image (changes per tab) */}
+      {showBackground && <ScreenBackground src={activeBackground} />}
 
       {/* Top Bar */}
       <motion.header
@@ -102,12 +100,12 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-1.5">
             <motion.button
-              onClick={() => setShowVideo(!showVideo)}
+              onClick={() => setShowBackground(!showBackground)}
               whileTap={{ scale: 0.9 }}
-              className={`text-[10px] px-2 py-1 rounded-full transition-all ${showVideo ? "bg-white/20 text-white" : "bg-white/10 text-white/50 hover:bg-white/20"}`}
-              title="Toggle video background"
+              className={`text-[10px] px-2 py-1 rounded-full transition-all ${showBackground ? "bg-white/20 text-white" : "bg-white/10 text-white/50 hover:bg-white/20"}`}
+              title="Toggle background image"
             >
-              🎬
+              🖼️
             </motion.button>
             <motion.div
               className="text-xs text-white/60 flex items-center gap-1 ml-1"
