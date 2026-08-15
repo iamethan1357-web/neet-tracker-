@@ -3,33 +3,24 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ScreenBackgroundProps {
-  srcs: string[];
+  src: string;
   /** 0–1 darkness of the readability overlay (default 0.35) */
   overlay?: number;
 }
 
 /**
- * Full-screen image background. When the screen changes, the new image
- * crossfades in. Tries each candidate src in order and uses the first
- * image that actually loads.
+ * Full-screen image background. When `src` changes (e.g. user switches
+ * tabs), the old image crossfades into the new one.
  */
-export default function ScreenBackground({ srcs, overlay = 0.35 }: ScreenBackgroundProps) {
-  const [fallbackIndex, setFallbackIndex] = useState(0);
+export default function ScreenBackground({ src, overlay = 0.35 }: ScreenBackgroundProps) {
   const [loaded, setLoaded] = useState(false);
-
-  const currentSrc = srcs[Math.min(fallbackIndex, srcs.length - 1)];
-
-  const handleError = () => {
-    setLoaded(false);
-    setFallbackIndex((i) => (i + 1 < srcs.length ? i + 1 : i));
-  };
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-black">
       <AnimatePresence>
         <motion.img
-          key={currentSrc}
-          src={currentSrc}
+          key={src}
+          src={src}
           alt=""
           aria-hidden
           className="absolute inset-0 w-full h-full object-cover"
@@ -38,7 +29,6 @@ export default function ScreenBackground({ srcs, overlay = 0.35 }: ScreenBackgro
           exit={{ opacity: 0 }}
           transition={{ duration: 1, ease: "easeInOut" }}
           onLoad={() => setLoaded(true)}
-          onError={handleError}
         />
       </AnimatePresence>
 

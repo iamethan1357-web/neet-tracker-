@@ -8,7 +8,7 @@ import Calendar from "@/components/Calendar";
 import Stats from "@/components/Stats";
 import Profile from "@/components/Profile";
 import ScreenBackground from "@/components/ScreenBackground";
-import { backgroundSrcs } from "@/lib/backgrounds";
+import { backgroundImages } from "@/lib/backgrounds";
 
 type Tab = "dashboard" | "planner" | "calendar" | "stats" | "profile";
 
@@ -73,12 +73,12 @@ export default function Home() {
 
   // Each screen (tab) has its own background image — it crossfades
   // automatically when the user switches tabs.
-  const activeBackgroundSrcs = backgroundSrcs(tab);
+  const activeBackground = backgroundImages[tab];
 
   return (
     <div className="min-h-screen pb-20 perspective-container relative">
       {/* Screen background image (changes per tab) */}
-      {showBackground && <ScreenBackground srcs={activeBackgroundSrcs} />}
+      {showBackground && <ScreenBackground src={activeBackground} />}
 
       {/* Top Bar */}
       <motion.header

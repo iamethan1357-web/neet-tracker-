@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ScreenBackground from "@/components/ScreenBackground";
 import SolarSystem from "@/components/SolarSystem";
-import { backgroundSrcs } from "@/lib/backgrounds";
+import { backgroundImages } from "@/lib/backgrounds";
 
 interface AuthScreenProps {
   onAuth: (token: string, user: Record<string, unknown>) => void;
@@ -102,7 +102,7 @@ export default function AuthScreen({ onAuth }: AuthScreenProps) {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background layer */}
-      {bgMode === "image" ? <ScreenBackground srcs={backgroundSrcs("auth")} /> : <SolarSystem />}
+      {bgMode === "image" ? <ScreenBackground src={backgroundImages.auth} /> : <SolarSystem />}
 
       {/* Form layer */}
       <motion.div

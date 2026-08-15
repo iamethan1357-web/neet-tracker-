@@ -3,7 +3,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import ScreenBackground from "@/components/ScreenBackground";
-import { backgroundSrcs } from "@/lib/backgrounds";
+import { backgroundImages } from "@/lib/backgrounds";
 
 function ResetPasswordContent() {
   const searchParams = useSearchParams();
@@ -73,7 +73,7 @@ function ResetPasswordContent() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <ScreenBackground srcs={backgroundSrcs("reset")} />
+      <ScreenBackground src={backgroundImages.reset} />
 
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.9 }}
